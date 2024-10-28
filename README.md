@@ -1,1 +1,2 @@
 # AS-PINNs
+We propose a novel type of adversarial and self-adaptive domain decomposition physics-informed neural networks (AS-PINNs). AS-PINNs employ adversarial methods to automatically and universally adjust interface positions of subdomains and capture discontinuities with different characteristics. AS-PINNs integrate interface handling methods, enabling the incorporation of interface conditions and boundary conditions through hard constraints, thereby significantly reducing the complexity of the loss function and intrinsically improving accuracy.
