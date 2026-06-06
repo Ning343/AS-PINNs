@@ -1,0 +1,26 @@
+{
+  "case_id": "function_fitting",
+  "title": "Discontinuous function fitting",
+  "paper_section": "Function fitting benchmark",
+  "problem_type": "one-dimensional discontinuous function reconstruction",
+  "domain": [0.0, 3.0],
+  "expected_discontinuities": [0.4, 0.9, 2.0],
+  "notebook": "notebooks/function_fitting/as_pinns_ex1.ipynb",
+  "solution_notebook": "notebooks/function_fitting/solution_ex1.ipynb",
+  "python_port": "scripts/notebook_ports/function_fitting/as_pinns_ex1.py",
+  "solution_port": "scripts/notebook_ports/function_fitting/solution_ex1.py",
+  "package_entry": "as_pinns.reference_solutions.function_fitting_reference",
+  "training": {
+    "seed": 1234,
+    "optimizer": "adam",
+    "learning_rates": [0.001, 0.0001],
+    "iterations": [20000, 20000],
+    "trainable_interfaces": 3,
+    "execute_requires": ["deepxde", "tensorflow", "matplotlib", "scipy", "xlrd", "xlwt"]
+  },
+  "lightweight_checks": [
+    "python scripts/check_repository.py",
+    "PYTHONPATH=src python -m as_pinns.cli run-plan function_fitting",
+    "PYTHONPATH=src python -m as_pinns.cli reference-summary function_fitting"
+  ]
+}

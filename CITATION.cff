@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "AS-PINNs"
+message: "If you use this repository, please cite the AS-PINNs paper."
+authors:
+  - family-names: Peng
+    given-names: Mingsheng
+  - family-names: Tang
+    given-names: Hesheng
+  - family-names: Kou
+    given-names: Yingwei
+repository-code: "https://github.com/Ning343/AS-PINNs"
+preferred-citation:
+  type: article
+  title: "Adversarial and self-adaptive domain decomposition physics-informed neural networks for high-order differential equations with discontinuities"
+  authors:
+    - family-names: Peng
+      given-names: Mingsheng
+    - family-names: Tang
+      given-names: Hesheng
+    - family-names: Kou
+      given-names: Yingwei
+  journal: "Engineering Applications of Artificial Intelligence"
+  year: 2025
+  doi: "10.1016/j.engappai.2025.110156"

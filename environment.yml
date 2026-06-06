@@ -1,0 +1,15 @@
+name: as-pinns
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.9
+  - numpy
+  - matplotlib
+  - sympy
+  - scipy
+  - pip
+  - pip:
+      - deepxde>=1.9
+      - tensorflow>=2.10
+      - xlrd>=2.0
+      - xlwt>=1.3

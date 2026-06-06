@@ -1,0 +1,24 @@
+name: checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lightweight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Check repository structure
+        run: python scripts/check_repository.py
+      - name: Check notebook hygiene
+        run: python scripts/clean_notebooks.py --check
+      - name: Run tests
+        run: PYTHONPATH=src python -m unittest discover -s tests
+      - name: Compile Python files
+        run: python -m compileall -q src scripts tests

@@ -1,0 +1,27 @@
+{
+  "case_id": "force_discontinuity",
+  "title": "Euler-Bernoulli beam with discontinuous loading",
+  "paper_section": "High-order problem with source-term discontinuity",
+  "problem_type": "fourth-order beam equation with discontinuous load",
+  "domain": [0.0, 1.0],
+  "expected_discontinuities": [0.3333333333333333, 0.75],
+  "notebook": "notebooks/force_discontinuity/as_pinns_ex2.ipynb",
+  "solution_notebook": "notebooks/force_discontinuity/solution_ex2.ipynb",
+  "python_port": "scripts/notebook_ports/force_discontinuity/as_pinns_ex2.py",
+  "solution_port": "scripts/notebook_ports/force_discontinuity/solution_ex2.py",
+  "package_entry": "as_pinns.reference_solutions.force_profile",
+  "training": {
+    "seed": 1234,
+    "optimizer": "adam",
+    "learning_rates": [0.001, 0.0001],
+    "iterations": [10000, 90000],
+    "trainable_interfaces": 1,
+    "adaptive_anchor_points": 20,
+    "execute_requires": ["deepxde", "tensorflow", "matplotlib", "scipy"]
+  },
+  "lightweight_checks": [
+    "python scripts/check_repository.py",
+    "PYTHONPATH=src python -m as_pinns.cli run-plan force_discontinuity",
+    "PYTHONPATH=src python -m as_pinns.cli reference-summary force_discontinuity"
+  ]
+}
