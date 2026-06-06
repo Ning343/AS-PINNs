@@ -51,6 +51,9 @@ For full DeepXDE training, install the training extras in a suitable TensorFlow 
 python -m pip install -e ".[training]"
 ```
 
+The `requirements.txt` file lists the combined pip dependencies for full-training
+environments. It is not required for lightweight inspection, tests, or CI.
+
 GPU-capable Linux or WSL environments are recommended for full PINN training. The default command-line entry points are dry-run utilities and do not launch expensive training.
 
 ## Usage

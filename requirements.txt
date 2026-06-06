@@ -1,10 +1,17 @@
+# Full-training pip dependency list.
+#
+# Lightweight inspection and tests use the package metadata instead:
+#   python -m pip install -e .
+#
+# Full training can also be installed from the package extra:
+#   python -m pip install -e ".[training]"
+#
 numpy>=1.23
 matplotlib>=3.7
 sympy>=1.11
 
-# Full training dependencies. They are intentionally separated from the
-# lightweight repository checks because DeepXDE/TensorFlow installation is
-# environment-specific.
+# DeepXDE/TensorFlow installation is environment-specific, so these dependencies
+# are not required for lightweight repository checks or CI.
 deepxde>=1.9
 tensorflow>=2.10
 scipy>=1.10

@@ -16,6 +16,10 @@ Full training setup:
 python -m pip install -e ".[training]"
 ```
 
+The `requirements.txt` file is a full-training pip dependency list. Lightweight
+inspection and tests use the package metadata from `pyproject.toml` and do not
+require the DeepXDE/TensorFlow dependencies listed there.
+
 The Conda environment file provides an alternative environment specification:
 
 ```bash
