@@ -26,8 +26,8 @@ def _cmd_case_summary(args: argparse.Namespace) -> int:
         "problem_type": case.problem_type,
         "domain": case.domain,
         "expected_discontinuities": case.expected_discontinuities,
-        "notebook": f"notebooks/{case.primary_notebook}",
-        "python_port": f"scripts/notebook_ports/{case.primary_port}",
+        "python_script": f"scripts/cases/{case.primary_script}",
+        "solution_script": f"scripts/cases/{case.solution_script}",
         "outputs": case.outputs,
     }
     print(json.dumps(payload, indent=2))
@@ -89,7 +89,7 @@ def build_parser() -> argparse.ArgumentParser:
     plan_parser.add_argument("case_id")
     plan_parser.add_argument("--output-directory", default="outputs/_intermediate")
     plan_parser.add_argument("--run-name", help="Optional stable run directory name for --execute")
-    plan_parser.add_argument("--execute", action="store_true", help="Launch the notebook-derived training port")
+    plan_parser.add_argument("--execute", action="store_true", help="Launch the Python case script")
     plan_parser.set_defaults(func=_cmd_run_plan)
 
     manifest_parser = sub.add_parser("run-manifest", help="Print or write a reproducible run manifest")

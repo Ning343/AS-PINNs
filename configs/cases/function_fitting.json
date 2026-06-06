@@ -5,10 +5,8 @@
   "problem_type": "one-dimensional discontinuous function reconstruction",
   "domain": [0.0, 3.0],
   "expected_discontinuities": [0.4, 0.9, 2.0],
-  "notebook": "notebooks/function_fitting/as_pinns_ex1.ipynb",
-  "solution_notebook": "notebooks/function_fitting/solution_ex1.ipynb",
-  "python_port": "scripts/notebook_ports/function_fitting/as_pinns_ex1.py",
-  "solution_port": "scripts/notebook_ports/function_fitting/solution_ex1.py",
+  "python_script": "scripts/cases/function_fitting/as_pinns_ex1.py",
+  "solution_script": "scripts/cases/function_fitting/solution_ex1.py",
   "package_entry": "as_pinns.reference_solutions.function_fitting_reference",
   "training": {
     "seed": 1234,

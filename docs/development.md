@@ -6,24 +6,22 @@ The repository is organized around reproducible research use:
 
 | Directory | Purpose |
 | --- | --- |
-| `notebooks/` | Original AS-PINNs experiment notebooks |
-| `scripts/notebook_ports/` | Direct `.py` ports of the notebooks |
+| `scripts/cases/` | Executable AS-PINNs benchmark and reference scripts |
 | `src/as_pinns/` | Reusable Python package layer |
 | `configs/cases/` | Case metadata and validation commands |
-| `docs/` | Method, reproduction, notebook, and maintenance documentation |
+| `docs/` | Method, reproduction, Python script, and maintenance documentation |
 | `tests/` | Lightweight tests that avoid full neural-network training |
 
 ## Adding a Case
 
-1. Place original notebooks under `notebooks/<case_id>/`.
-2. Generate or maintain direct Python ports under `scripts/notebook_ports/<case_id>/`.
+1. Place executable AS-PINNs scripts under `scripts/cases/<case_id>/`.
+2. Add or update the corresponding reference script when the case needs one.
 3. Add a case JSON file under `configs/cases/`.
 4. Register the case in `src/as_pinns/cases.py`.
 5. Add deterministic reference utilities when available.
 6. Add lightweight tests for metadata and reference profiles.
-7. Update `docs/notebook-inventory.md`.
-8. Clean notebooks with `python scripts/clean_notebooks.py`.
-9. Run repository checks before publishing.
+7. Update `docs/python-case-inventory.md`.
+8. Run repository checks before publishing.
 
 ## Code Policy
 
@@ -35,7 +33,6 @@ Training entry points should produce or update a run manifest before expensive e
 
 ```bash
 python scripts/check_repository.py
-python scripts/clean_notebooks.py --check
 PYTHONPATH=src python -m unittest discover -s tests
 python -m compileall -q src scripts tests
 ```

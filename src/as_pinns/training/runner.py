@@ -1,11 +1,9 @@
-"""Controlled execution for notebook-derived AS-PINNs training scripts.
+"""Controlled execution for AS-PINNs Python case scripts.
 
-The original notebooks were exported as traceable Python ports under
-``scripts/notebook_ports``. Those ports intentionally keep notebook cell order
-and therefore still execute as scripts with file-system side effects. This
-module wraps those scripts in reproducible run directories so full training can
-be launched explicitly without making DeepXDE/TensorFlow required for ordinary
-package imports.
+The case scripts under ``scripts/cases`` preserve the executable AS-PINNs
+training workflows. This module wraps those scripts in reproducible run
+directories so full training can be launched explicitly without making
+DeepXDE/TensorFlow required for ordinary package imports.
 """
 
 from __future__ import annotations
@@ -91,10 +89,10 @@ def _utc_timestamp() -> str:
 def _copy_training_sources(case_id: str, work_directory: Path) -> tuple[Path, Path]:
     case = get_case(case_id)
     work_directory.mkdir(parents=True, exist_ok=True)
-    script_target = work_directory / case.port_path.name
-    solution_target = work_directory / case.solution_port_path.name
-    shutil.copy2(case.port_path, script_target)
-    shutil.copy2(case.solution_port_path, solution_target)
+    script_target = work_directory / case.script_path.name
+    solution_target = work_directory / case.solution_script_path.name
+    shutil.copy2(case.script_path, script_target)
+    shutil.copy2(case.solution_script_path, solution_target)
     return script_target, solution_target
 
 
@@ -159,8 +157,8 @@ def prepare_training_run(
         output_directory=run_directory,
         work_directory=work_directory,
         manifest_path=manifest_path,
-        script_path=case.port_path,
-        solution_path=case.solution_port_path,
+        script_path=case.script_path,
+        solution_path=case.solution_script_path,
         copied_script_path=copied_script,
         copied_solution_path=copied_solution,
         log_path=log_path,
@@ -181,7 +179,7 @@ def execute_training_run(
     *,
     require_dependencies: bool = True,
 ) -> TrainingRunSummary:
-    """Execute a notebook-derived Python port in an isolated run directory."""
+    """Execute a Python case script in an isolated run directory."""
 
     prepared = prepare_training_run(
         case_id,

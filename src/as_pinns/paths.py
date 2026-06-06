@@ -13,9 +13,5 @@ def config_dir() -> Path:
     return project_root() / "configs" / "cases"
 
 
-def notebooks_dir() -> Path:
-    return project_root() / "notebooks"
-
-
-def notebook_ports_dir() -> Path:
-    return project_root() / "scripts" / "notebook_ports"
+def case_scripts_dir() -> Path:
+    return project_root() / "scripts" / "cases"

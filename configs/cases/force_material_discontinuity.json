@@ -5,10 +5,8 @@
   "problem_type": "fourth-order beam equation with load and material discontinuities",
   "domain": [0.0, 1.0],
   "expected_discontinuities": [0.35, 0.5, 0.65],
-  "notebook": "notebooks/force_material_discontinuity/as_pinns_ex3.ipynb",
-  "solution_notebook": "notebooks/force_material_discontinuity/solution_ex3.ipynb",
-  "python_port": "scripts/notebook_ports/force_material_discontinuity/as_pinns_ex3.py",
-  "solution_port": "scripts/notebook_ports/force_material_discontinuity/solution_ex3.py",
+  "python_script": "scripts/cases/force_material_discontinuity/as_pinns_ex3.py",
+  "solution_script": "scripts/cases/force_material_discontinuity/solution_ex3.py",
   "package_entry": "as_pinns.reference_solutions.force_material_profiles",
   "training": {
     "seed": 1234,

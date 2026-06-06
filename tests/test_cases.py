@@ -12,11 +12,10 @@ class CaseRegistryTests(unittest.TestCase):
     def test_case_paths_are_relative_and_stable(self):
         for case in list_cases():
             with self.subTest(case_id=case.case_id):
-                self.assertTrue(case.notebook_path.exists())
-                self.assertTrue(case.solution_notebook_path.exists())
-                self.assertTrue(case.port_path.exists())
-                self.assertTrue(case.solution_port_path.exists())
-                self.assertNotIn(" ", case.primary_notebook)
+                self.assertTrue(case.script_path.exists())
+                self.assertTrue(case.solution_script_path.exists())
+                self.assertNotIn(" ", case.primary_script)
+                self.assertNotIn(" ", case.solution_script)
                 self.assertLess(case.domain[0], case.domain[1])
 
     def test_training_plans_are_dry_run_by_default(self):

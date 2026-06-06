@@ -1,11 +1,11 @@
-"""Case metadata for the AS-PINNs benchmark notebooks."""
+"""Case metadata for the AS-PINNs benchmark Python scripts."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
 
-from .paths import notebook_ports_dir, notebooks_dir
+from .paths import case_scripts_dir
 
 
 @dataclass(frozen=True)
@@ -26,28 +26,18 @@ class CaseDefinition:
     domain: tuple[float, float]
     expected_discontinuities: tuple[float, ...]
     trainable_interfaces: int
-    primary_notebook: str
-    solution_notebook: str
-    primary_port: str
-    solution_port: str
+    primary_script: str
+    solution_script: str
     outputs: tuple[str, ...]
     training: TrainingSchedule
 
     @property
-    def notebook_path(self) -> Path:
-        return notebooks_dir() / self.primary_notebook
+    def script_path(self) -> Path:
+        return case_scripts_dir() / self.primary_script
 
     @property
-    def solution_notebook_path(self) -> Path:
-        return notebooks_dir() / self.solution_notebook
-
-    @property
-    def port_path(self) -> Path:
-        return notebook_ports_dir() / self.primary_port
-
-    @property
-    def solution_port_path(self) -> Path:
-        return notebook_ports_dir() / self.solution_port
+    def solution_script_path(self) -> Path:
+        return case_scripts_dir() / self.solution_script
 
 
 CASES: dict[str, CaseDefinition] = {
@@ -58,10 +48,8 @@ CASES: dict[str, CaseDefinition] = {
         domain=(0.0, 3.0),
         expected_discontinuities=(0.4, 0.9, 2.0),
         trainable_interfaces=3,
-        primary_notebook="function_fitting/as_pinns_ex1.ipynb",
-        solution_notebook="function_fitting/solution_ex1.ipynb",
-        primary_port="function_fitting/as_pinns_ex1.py",
-        solution_port="function_fitting/solution_ex1.py",
+        primary_script="function_fitting/as_pinns_ex1.py",
+        solution_script="function_fitting/solution_ex1.py",
         outputs=("piecewise field", "first derivative", "second derivative"),
         training=TrainingSchedule(
             seed=1234,
@@ -79,10 +67,8 @@ CASES: dict[str, CaseDefinition] = {
         domain=(0.0, 1.0),
         expected_discontinuities=(1.0 / 3.0, 0.75),
         trainable_interfaces=1,
-        primary_notebook="force_discontinuity/as_pinns_ex2.ipynb",
-        solution_notebook="force_discontinuity/solution_ex2.ipynb",
-        primary_port="force_discontinuity/as_pinns_ex2.py",
-        solution_port="force_discontinuity/solution_ex2.py",
+        primary_script="force_discontinuity/as_pinns_ex2.py",
+        solution_script="force_discontinuity/solution_ex2.py",
         outputs=("deflection", "rotation", "moment", "shear", "load"),
         training=TrainingSchedule(
             seed=1234,
@@ -100,10 +86,8 @@ CASES: dict[str, CaseDefinition] = {
         domain=(0.0, 1.0),
         expected_discontinuities=(0.35, 0.5, 0.65),
         trainable_interfaces=3,
-        primary_notebook="force_material_discontinuity/as_pinns_ex3.ipynb",
-        solution_notebook="force_material_discontinuity/solution_ex3.ipynb",
-        primary_port="force_material_discontinuity/as_pinns_ex3.py",
-        solution_port="force_material_discontinuity/solution_ex3.py",
+        primary_script="force_material_discontinuity/as_pinns_ex3.py",
+        solution_script="force_material_discontinuity/solution_ex3.py",
         outputs=("deflection", "rotation", "moment", "shear", "load", "stiffness"),
         training=TrainingSchedule(
             seed=1234,

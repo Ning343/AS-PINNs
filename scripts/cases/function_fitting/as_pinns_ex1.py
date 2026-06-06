@@ -1,8 +1,7 @@
-"""Python port generated from the original AS-PINNs notebook.
+"""Executable AS-PINNs Python case script.
 
-Source notebook: notebooks/function_fitting/as_pinns_ex1.ipynb
-
-This file keeps the original executable cell order for traceability. Reusable, tested project code lives under src/as_pinns/.
+Case: function_fitting/as_pinns_ex1.
+Reusable, tested project code lives under src/as_pinns/.
 """
 
 

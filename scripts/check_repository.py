@@ -22,13 +22,11 @@ REQUIRED_PATHS = [
     "src/as_pinns/execution.py",
     "src/as_pinns/training/__init__.py",
     "src/as_pinns/training/runner.py",
-    "scripts/clean_notebooks.py",
-    "scripts/export_notebooks_to_py.py",
     "docs/method-overview.md",
-    "docs/notebook-migration.md",
+    "docs/python-conversion.md",
     "docs/reproducibility.md",
     "docs/development.md",
-    "docs/notebook-inventory.md",
+    "docs/python-case-inventory.md",
     ".github/workflows/checks.yml",
 ]
 
@@ -38,10 +36,8 @@ REQUIRED_CONFIG_FIELDS = {
     "problem_type",
     "domain",
     "expected_discontinuities",
-    "notebook",
-    "solution_notebook",
-    "python_port",
-    "solution_port",
+    "python_script",
+    "solution_script",
     "training",
     "lightweight_checks",
 }
@@ -61,21 +57,6 @@ def _check_path(path: str) -> None:
         raise AssertionError(f"Missing required path: {path}")
 
 
-def _check_notebook(path: Path) -> None:
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    if "cells" not in payload:
-        raise AssertionError(f"Notebook has no cells: {path}")
-    if not any(cell.get("cell_type") == "code" for cell in payload["cells"]):
-        raise AssertionError(f"Notebook has no code cells: {path}")
-    for index, cell in enumerate(payload["cells"], start=1):
-        if cell.get("cell_type") != "code":
-            continue
-        if cell.get("execution_count") is not None:
-            raise AssertionError(f"Notebook cell {index} has execution_count: {path}")
-        if cell.get("outputs"):
-            raise AssertionError(f"Notebook cell {index} has saved outputs: {path}")
-
-
 def _check_config(path: Path) -> None:
     config = json.loads(path.read_text(encoding="utf-8"))
     missing = REQUIRED_CONFIG_FIELDS - set(config)
@@ -90,13 +71,10 @@ def _check_config(path: Path) -> None:
     if len(config["domain"]) != 2 or config["domain"][0] >= config["domain"][1]:
         raise AssertionError(f"{path} has an invalid domain")
 
-    for key in ("notebook", "solution_notebook", "python_port", "solution_port"):
+    for key in ("python_script", "solution_script"):
         referenced = ROOT / config[key]
         if not referenced.exists():
             raise AssertionError(f"{path} references a missing {key}: {config[key]}")
-
-    _check_notebook(ROOT / config["notebook"])
-    _check_notebook(ROOT / config["solution_notebook"])
 
 
 def main() -> int:
@@ -109,9 +87,14 @@ def main() -> int:
     for path in config_paths:
         _check_config(path)
 
-    port_paths = sorted((ROOT / "scripts" / "notebook_ports").rglob("*.py"))
-    if len(port_paths) != 6:
-        raise AssertionError(f"Expected 6 notebook Python ports, found {len(port_paths)}")
+    ipynb_paths = sorted(ROOT.rglob("*.ipynb"))
+    if ipynb_paths:
+        listed = ", ".join(str(path.relative_to(ROOT)) for path in ipynb_paths)
+        raise AssertionError(f"IPYNB files are not part of the Python-only repository: {listed}")
+
+    case_paths = sorted((ROOT / "scripts" / "cases").rglob("*.py"))
+    if len(case_paths) != 6:
+        raise AssertionError(f"Expected 6 Python case scripts, found {len(case_paths)}")
 
     print("AS-PINNs repository structure check passed.")
     return 0

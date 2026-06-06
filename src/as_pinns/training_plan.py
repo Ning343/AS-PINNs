@@ -1,4 +1,4 @@
-"""Dry-run training plans for the notebook-derived AS-PINNs cases."""
+"""Dry-run training plans for AS-PINNs Python case scripts."""
 
 from __future__ import annotations
 
@@ -14,8 +14,8 @@ class TrainingPlan:
     domain: tuple[float, float]
     expected_discontinuities: tuple[float, ...]
     trainable_interfaces: int
-    notebook: str
-    python_port: str
+    python_script: str
+    solution_script: str
     seed: int
     learning_rates: tuple[float, ...]
     iterations: tuple[int, ...]
@@ -36,8 +36,8 @@ def build_training_plan(case_id: str, output_directory: str = "outputs/_intermed
         domain=case.domain,
         expected_discontinuities=case.expected_discontinuities,
         trainable_interfaces=case.trainable_interfaces,
-        notebook=f"notebooks/{case.primary_notebook}",
-        python_port=f"scripts/notebook_ports/{case.primary_port}",
+        python_script=f"scripts/cases/{case.primary_script}",
+        solution_script=f"scripts/cases/{case.solution_script}",
         seed=case.training.seed,
         learning_rates=case.training.learning_rates,
         iterations=case.training.iterations,

@@ -1,8 +1,7 @@
-"""Python port generated from the original AS-PINNs notebook.
+"""Executable AS-PINNs Python reference script.
 
-Source notebook: notebooks/force_discontinuity/solution_ex2.ipynb
-
-This file keeps the original executable cell order for traceability. Reusable, tested project code lives under src/as_pinns/.
+Case: force_discontinuity/solution_ex2.
+Reusable, tested project code lives under src/as_pinns/.
 """
 
 

@@ -1,4 +1,4 @@
-"""Lightweight reference profiles extracted from the original notebooks."""
+"""Lightweight reference profiles for AS-PINNs benchmark cases."""
 
 from __future__ import annotations
 

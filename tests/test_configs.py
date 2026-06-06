@@ -17,6 +17,8 @@ class CaseConfigTests(unittest.TestCase):
                 config = load_case_config(case_id)
                 self.assertTrue(config["lightweight_checks"])
                 self.assertTrue(config["training"]["execute_requires"])
+                self.assertTrue(config["python_script"].startswith("scripts/cases/"))
+                self.assertTrue(config["solution_script"].startswith("scripts/cases/"))
 
 
 if __name__ == "__main__":

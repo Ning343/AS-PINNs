@@ -13,13 +13,10 @@ The repository corresponds to:
 |-- configs/
 |   `-- cases/                         # Case-level reproduction metadata
 |-- docs/                              # Method, migration, and reproduction notes
-|-- notebooks/                         # Original research notebooks with stable paths
 |-- scripts/
 |   |-- check_repository.py            # Lightweight structural validation
-|   |-- clean_notebooks.py             # Remove notebook execution outputs
-|   |-- export_notebooks_to_py.py      # Notebook-to-Python export helper
 |   |-- run_case.py                    # Case manifest and full-training wrapper
-|   `-- notebook_ports/                # Python ports generated from notebooks
+|   `-- cases/                         # Executable Python benchmark scripts
 |-- src/
 |   `-- as_pinns/                      # Reusable and testable Python package layer
 |-- tests/                             # Lightweight tests
@@ -32,13 +29,13 @@ The repository corresponds to:
 
 ## Benchmark Cases
 
-| Case ID | Problem | Notebook | Python port |
-| --- | --- | --- | --- |
-| `function_fitting` | Discontinuous function fitting | `notebooks/function_fitting/as_pinns_ex1.ipynb` | `scripts/notebook_ports/function_fitting/as_pinns_ex1.py` |
-| `force_discontinuity` | Euler-Bernoulli beam with discontinuous loading | `notebooks/force_discontinuity/as_pinns_ex2.ipynb` | `scripts/notebook_ports/force_discontinuity/as_pinns_ex2.py` |
-| `force_material_discontinuity` | Euler-Bernoulli beam with discontinuous loading and stiffness | `notebooks/force_material_discontinuity/as_pinns_ex3.ipynb` | `scripts/notebook_ports/force_material_discontinuity/as_pinns_ex3.py` |
+| Case ID | Problem | Python script |
+| --- | --- | --- |
+| `function_fitting` | Discontinuous function fitting | `scripts/cases/function_fitting/as_pinns_ex1.py` |
+| `force_discontinuity` | Euler-Bernoulli beam with discontinuous loading | `scripts/cases/force_discontinuity/as_pinns_ex2.py` |
+| `force_material_discontinuity` | Euler-Bernoulli beam with discontinuous loading and stiffness | `scripts/cases/force_material_discontinuity/as_pinns_ex3.py` |
 
-The notebooks remain as research records. The Python package and scripts provide reusable case metadata, reference profiles, dry-run training plans, controlled training execution, and repository checks.
+The repository is Python-only. The Python package and scripts provide reusable case metadata, reference profiles, dry-run training plans, controlled training execution, and repository checks.
 
 ## Installation
 
@@ -82,13 +79,13 @@ Write a run manifest before full training:
 PYTHONPATH=src python scripts/run_case.py force_material_discontinuity --write-manifest
 ```
 
-Launch a full notebook-derived training run after installing the training dependencies:
+Launch a full Python case run after installing the training dependencies:
 
 ```bash
 PYTHONPATH=src python scripts/run_case.py force_material_discontinuity --execute
 ```
 
-The explicit execution path creates an isolated directory under `outputs/_intermediate/<case_id>/<run_name>/`, copies the traceable Python port and its solution helper into that directory, writes a manifest, captures command output in `training.log`, and writes `training_summary.json` after the subprocess exits. If DeepXDE, TensorFlow, or another required training dependency is unavailable, the command exits before starting a long training run.
+The explicit execution path creates an isolated directory under `outputs/_intermediate/<case_id>/<run_name>/`, copies the case script and its solution helper into that directory, writes a manifest, captures command output in `training.log`, and writes `training_summary.json` after the subprocess exits. If DeepXDE, TensorFlow, or another required training dependency is unavailable, the command exits before starting a long training run.
 
 Run lightweight validation:
 
@@ -98,23 +95,11 @@ PYTHONPATH=src python -m unittest discover -s tests
 python -m compileall -q src scripts tests
 ```
 
-Regenerate the direct notebook ports:
-
-```bash
-python scripts/export_notebooks_to_py.py
-```
-
-Clean notebook outputs before publishing:
-
-```bash
-python scripts/clean_notebooks.py
-```
-
 ## Documentation
 
 - `docs/method-overview.md` describes the AS-PINNs method and the benchmark scope.
-- `docs/notebook-inventory.md` maps every original notebook to its Python port and package-level counterpart.
-- `docs/notebook-migration.md` defines how notebook code is separated into reusable Python modules and controlled execution wrappers.
+- `docs/python-case-inventory.md` maps every Python case script to its package-level counterpart.
+- `docs/python-conversion.md` defines how Python case scripts are separated from reusable package modules and controlled execution wrappers.
 - `docs/reproducibility.md` describes environment setup and validation levels.
 - `docs/development.md` gives maintenance rules for adding or revising cases.
 

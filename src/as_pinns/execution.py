@@ -48,7 +48,7 @@ def build_run_manifest(case_id: str, output_directory: str = "outputs/_intermedi
     missing = tuple(status.package for status in dependency_status if not status.available)
     notes = (
         "The default CLI path is manifest-first and does not launch full DeepXDE training.",
-        "Use the explicit --execute flag to run a notebook-derived port in an isolated experiment directory.",
+        "Use the explicit --execute flag to run a Python case script in an isolated experiment directory.",
     )
     if missing:
         notes += (f"Missing training dependencies: {', '.join(missing)}.",)
