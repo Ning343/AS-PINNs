@@ -10,7 +10,7 @@ The repository follows a layered migration strategy. Original notebooks remain a
 | --- | --- | --- |
 | Research notebooks | `notebooks/` | Preserve the original experiment flow, figures, exploratory cells, and training procedure |
 | Direct Python ports | `scripts/notebook_ports/` | Provide a cell-order Python representation of each notebook for inspection and future refactoring |
-| Reusable package | `src/as_pinns/` | Hold case metadata, reference profiles, training plans, and testable utilities |
+| Reusable package | `src/as_pinns/` | Hold case metadata, reference profiles, training plans, controlled execution wrappers, and testable utilities |
 | Case configuration | `configs/cases/` | Record domain, discontinuities, notebooks, ports, dependencies, and validation commands |
 | Validation | `scripts/check_repository.py`, `tests/` | Verify repository structure and lightweight numerical behavior |
 
@@ -45,4 +45,4 @@ Notebook-only code can remain in notebooks or direct ports when it is:
 | Force discontinuity | Available | Available | Available for load profile | Available |
 | Force and material discontinuity | Available | Available | Available for load and stiffness profiles | Available |
 
-The full DeepXDE training implementation remains traceable through the notebook ports. Full training should be run in a prepared environment and recorded under `outputs/_intermediate/` or a documented experiment directory.
+The full DeepXDE training implementation remains traceable through the notebook ports. The maintained runner in `as_pinns.training.runner` launches those ports only when the user explicitly requests execution. Each run is isolated under `outputs/_intermediate/<case_id>/<run_name>/`, with a manifest, copied source files, a command log, and a machine-readable summary. This keeps the repository importable and testable without DeepXDE/TensorFlow while still providing a standard path for reproducible full training.

@@ -20,6 +20,8 @@ REQUIRED_PATHS = [
     "src/as_pinns/reference_solutions.py",
     "src/as_pinns/training_plan.py",
     "src/as_pinns/execution.py",
+    "src/as_pinns/training/__init__.py",
+    "src/as_pinns/training/runner.py",
     "scripts/clean_notebooks.py",
     "scripts/export_notebooks_to_py.py",
     "docs/method-overview.md",

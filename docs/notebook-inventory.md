@@ -15,7 +15,7 @@ The original notebooks are preserved under `notebooks/` with stable, space-free 
 
 The notebooks are research records. They contain full plotting, training loops, residual-adaptive point insertion, and case-specific visual diagnostics. They are useful for tracing the original experiment procedure.
 
-The Python package is the maintained execution layer for reusable behavior. It records case identifiers, expected discontinuities, notebook paths, training schedules, reference profiles, and dry-run plans.
+The Python package is the maintained execution layer for reusable behavior. It records case identifiers, expected discontinuities, notebook paths, training schedules, reference profiles, dry-run plans, and controlled full-training execution wrappers.
 
 ## Porting Policy
 

@@ -55,7 +55,7 @@ Full training should be treated as an experiment run rather than a routine CI st
 
 1. Use a GPU-capable Linux or WSL environment when available.
 2. Install DeepXDE and a compatible TensorFlow backend.
-3. Run the relevant notebook or direct Python port.
+3. Launch the controlled case runner with `--execute`, or run the relevant notebook port directly when reproducing the original notebook flow.
 4. Save generated histories, interface traces, figures, and result arrays under `outputs/_intermediate/`.
 5. Record the case ID, seed, package versions, optimizer schedule, runtime, and final metrics.
 
@@ -72,3 +72,26 @@ PYTHONPATH=src python scripts/run_case.py force_discontinuity --write-manifest
 ```
 
 The manifest records the case ID, notebook path, Python port, random seed, learning-rate schedule, iteration schedule, output directory, Python version, platform, and training dependency status. This behavior prevents accidental long CPU training runs while still preserving the information required to reproduce a future training run.
+
+The explicit execution path is:
+
+```bash
+PYTHONPATH=src python scripts/run_case.py force_discontinuity --execute
+```
+
+Execution creates a case-specific experiment directory:
+
+```text
+outputs/_intermediate/<case_id>/<run_name>/
+|-- <case_id>_run_manifest.json
+|-- prepared_run.json
+|-- training.log
+|-- training_summary.json
+`-- work/
+    |-- as_pinns_ex*.py
+    `-- solution_ex*.py
+```
+
+The `work/` directory is the subprocess working directory. The runner copies the traceable notebook-derived Python port and its solution helper there before execution, so generated `.dat`, `.txt`, figure, and DeepXDE output files are contained inside the experiment run instead of being written to the repository root. `training.log` captures standard output and errors. `training_summary.json` records the return code, elapsed time, command, and files produced in `work/`.
+
+If a required training dependency is missing, the runner stops before launching the subprocess and prints an installation hint. Full AS-PINNs training is not run by CI because it is hardware-sensitive and can take a long time.

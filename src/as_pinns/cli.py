@@ -8,6 +8,7 @@ import json
 from .cases import get_case, list_cases
 from .execution import build_run_manifest, write_run_manifest
 from .reference_solutions import sample_reference
+from .training.runner import TrainingDependencyError, TrainingRunError, execute_training_run
 from .training_plan import build_training_plan
 
 
@@ -35,12 +36,18 @@ def _cmd_case_summary(args: argparse.Namespace) -> int:
 
 def _cmd_run_plan(args: argparse.Namespace) -> int:
     plan = build_training_plan(args.case_id, output_directory=args.output_directory)
-    print(json.dumps(plan.to_dict(), indent=2))
     if args.execute:
-        raise SystemExit(
-            "Full DeepXDE execution is not implemented in the lightweight CLI yet. "
-            "Use scripts/notebook_ports/ for the direct notebook ports, preferably in a GPU/Linux environment."
-        )
+        try:
+            summary = execute_training_run(
+                args.case_id,
+                output_directory=args.output_directory,
+                run_name=args.run_name,
+            )
+        except (TrainingDependencyError, TrainingRunError) as exc:
+            raise SystemExit(str(exc)) from exc
+        print(json.dumps(summary.to_dict(), indent=2))
+        return 0
+    print(json.dumps(plan.to_dict(), indent=2))
     return 0
 
 
@@ -81,7 +88,8 @@ def build_parser() -> argparse.ArgumentParser:
     plan_parser = sub.add_parser("run-plan", help="Print a reproducible dry-run training plan")
     plan_parser.add_argument("case_id")
     plan_parser.add_argument("--output-directory", default="outputs/_intermediate")
-    plan_parser.add_argument("--execute", action="store_true", help="Reserved for full training execution")
+    plan_parser.add_argument("--run-name", help="Optional stable run directory name for --execute")
+    plan_parser.add_argument("--execute", action="store_true", help="Launch the notebook-derived training port")
     plan_parser.set_defaults(func=_cmd_run_plan)
 
     manifest_parser = sub.add_parser("run-manifest", help="Print or write a reproducible run manifest")
