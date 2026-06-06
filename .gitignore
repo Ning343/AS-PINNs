@@ -8,6 +8,7 @@ __pycache__/
 outputs/
 *.dat
 *.txt
+!requirements.txt
 loss.dat
 train.dat
 

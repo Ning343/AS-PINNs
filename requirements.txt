@@ -1,0 +1,12 @@
+numpy>=1.23
+matplotlib>=3.7
+sympy>=1.11
+
+# Full training dependencies. They are intentionally separated from the
+# lightweight repository checks because DeepXDE/TensorFlow installation is
+# environment-specific.
+deepxde>=1.9
+tensorflow>=2.10
+scipy>=1.10
+xlrd>=2.0
+xlwt>=1.3
